@@ -1,8 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import Task from './components/Task';
 
 export default function App() {
+  const [tasks, setTasks] = useState([{ id: 1, title: 'I will wake up at 8 in the morning' }, { id: 2, title: 'I will practice html for 1 hour' }, { id: 3, title: 'I will give time for 2 hours css' }, { id: 4, title: 'Then I will have breakfast' }]);
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 30 }}>TodoList</Text>
@@ -11,10 +13,11 @@ export default function App() {
         <TouchableOpacity style={styles.addButton}><Text style={{ color: '#fff' }}>Add</Text></TouchableOpacity>
       </View>
       <View style={styles.TasksList} >
-        <Task text='I will wake up at 8 in the morning' />
-        <Task text='I will practice html for 1 hour' />
-        <Task text='I will give time for 2 hours css' />
-        <Task text='Then I will have breakfast' />
+        <FlatList
+          data={tasks}
+          renderItem={({ item }) => <Task text={item.title} />}
+          key={item => item.id}
+        />
       </View>
       <StatusBar style="auto" />
     </View>
